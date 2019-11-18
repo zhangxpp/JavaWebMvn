@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-tekton-helloworld
+spec:
+  selector:
+    matchLabels:
+      app: tomcat-tekton
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tomcat-tekton
+    spec:
+      containers:
+      - name: tomcat-tekton
+        image: zhangxpp/helloworld:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: "/opt"
+          name: tomcat-vol
+      volumes:
+      - name: tomcat-vol
+        hostPath: 
+          path: /var/data
